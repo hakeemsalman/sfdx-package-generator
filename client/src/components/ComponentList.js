@@ -69,14 +69,18 @@ export default function ComponentList({selectedMetadataType,isShowChildren}) {
   };
 
   const handleSelectAll = ()=>{
+    const isIndeterminateFilter = false
     selectedMetadataType.children=selectedMetadataType.children.map(child=>{
+      if(filterKey !== '' && child.text.toUpperCase().includes(filterKey.toUpperCase())){
+        child.isSelected=true
+        return child;
+      }
       child.isSelected=true;//update the child state 
       return child;
     });
 
     //ALl the children are selected
-    selectedMetadataType.isSelected=true;
-    selectedMetadataType.isIndeterminate=false;
+    selectedMetadataType=updateMetadataType(selectedMetadataType)
     dispatch({type: "COMPONENT_CHECKBOX_STATE_CHANGE" , payload : selectedMetadataType});
   };
 
